@@ -4,7 +4,6 @@ namespace Modules\Category\Services;
 
 use Illuminate\Support\Facades\DB;
 use Modules\Category\Services\Actions\CategoryAction;
-use Modules\Category\Services\CategoryServiceInterface;
 use Modules\Category\Services\Actions\CategoryDeleteAction;
 
 class CategoryService implements CategoryServiceInterface
@@ -24,8 +23,8 @@ class CategoryService implements CategoryServiceInterface
     /**
      * Cria e/ou atualiza o registro
      *
-     * @param array $request
-     * @param null|int $id
+     * @param  array  $request
+     * @param  null|int  $id
      * @return mixed
      */
     public function updateOrCreate($request, $id = null)
@@ -36,6 +35,7 @@ class CategoryService implements CategoryServiceInterface
             $category = $this->category->handle($request, $id);
 
             DB::commit();
+
             return $category;
         } catch (\Exception $e) {
             DB::rollBack();

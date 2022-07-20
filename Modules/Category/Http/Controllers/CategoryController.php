@@ -2,15 +2,14 @@
 
 namespace Modules\Category\Http\Controllers;
 
-use Modules\Category\Http\Requests;
 use Illuminate\Routing\Controller;
 use Inertia\Inertia;
 use Modules\Category\Entities\Category;
+use Modules\Category\Http\Requests;
 use Modules\Category\Services\CategoryServiceInterface;
 
 class CategoryController extends Controller
 {
-
     protected $category;
 
     protected $category_service;

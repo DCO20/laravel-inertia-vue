@@ -6,14 +6,13 @@ use Modules\Category\Entities\Category;
 
 class CategoryAction
 {
+    public function handle($request, $id)
+    {
+        $data = [
+            'name' => $request['name'],
+            'active' => $request['active'],
+        ];
 
-	public function handle($request, $id)
-	{
-		$data = [
-			'name' => $request['name'],
-			'active' => $request['active'],
-		];
-
-		return Category::updateOrCreate(['id' => $id], $data);
-	}
+        return Category::updateOrCreate(['id' => $id], $data);
+    }
 }
