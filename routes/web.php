@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Modules\Category\Entities\Category;
+use Modules\Post\Entities\Post;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,7 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return Inertia::render('Admin/Dashboard/Dashboard', [
         'categories' => Category::count(),
+        'posts' => Post::count(),
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 

@@ -215,7 +215,7 @@
                                                 mr-2
                                             "
                                         >
-                                            7
+                                        {{ posts }}
                                         </div>
                                     </div>
                                     <div
@@ -231,7 +231,7 @@
                                             rounded-full
                                         "
                                     >
-                                        Mais Informações
+                                       <Link :href="route('post.index')">Mais Informações</Link>
                                     </div>
                                 </div>
 
@@ -251,5 +251,6 @@ import { Link } from "@inertiajs/inertia-vue3";
 
 const props = defineProps({
     categories: Array,
+    posts: Array,
 });
 </script>
