@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Modules\Category\Entities\Category;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +26,9 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Admin/Dashboard/Dashboard');
+    return Inertia::render('Admin/Dashboard/Dashboard', [
+        'categories' => Category::count(),
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 require __DIR__.'/auth.php';
