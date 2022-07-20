@@ -27,12 +27,12 @@ class CategoryController extends Controller
     {
         $categories = $this->category->paginate(9);
 
-        return Inertia::render('Category/Index', compact('categories'));
+        return Inertia::render('Admin/Category/Index', compact('categories'));
     }
 
     public function create()
     {
-        return Inertia::render('Category/Create');
+        return Inertia::render('Admin/Category/Create');
     }
 
     public function store(Requests\CategoryRequest $request)
@@ -54,7 +54,7 @@ class CategoryController extends Controller
     {
         $category = $this->category->findOrFail($id);
 
-        return Inertia::render('Category/Edit', compact('category'));
+        return Inertia::render('Admin/Category/Edit', compact('category'));
     }
 
     public function update(Requests\CategoryRequest $request, $id)
@@ -71,7 +71,7 @@ class CategoryController extends Controller
     {
         $category = $this->category->findOrFail($id);
 
-        return Inertia::render('Category/Delete', compact('category'));
+        return Inertia::render('Admin/Category/Delete', compact('category'));
     }
 
     public function delete($id)
