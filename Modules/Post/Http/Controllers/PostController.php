@@ -2,85 +2,94 @@
 
 namespace Modules\Post\Http\Controllers;
 
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Storage;
+use Inertia\Inertia;
+use Modules\Post\Entities\Post;
+use Modules\Post\Http\Requests;
+use Modules\Post\Services\PostServiceInterface;
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Renderable
-     */
+    protected $post;
+
+    protected $post_service;
+
+    public function __construct(
+        Post $post,
+
+        PostServiceInterface $post_service
+    ) {
+        $this->post = $post;
+
+        $this->post_service = $post_service;
+    }
+
     public function index()
     {
-        return view('post::index');
+        return Inertia::render('Admin/Post/Index', [
+            'posts' => $this->post->paginate(9),
+            'image' => asset('storage/'.$this->post->image),
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Renderable
-     */
     public function create()
     {
-        return view('post::create');
+        return Inertia::render('Admin/Post/Create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  Request  $request
-     * @return Renderable
-     */
-    public function store(Request $request)
+    public function store(Requests\PostRequest $request)
     {
-        //
+        $this->post_service->updateOrCreate($request->all());
+
+        return redirect()
+            ->route('post.index')->with('message', 'Cadastro realizado com sucesso!');
     }
 
-    /**
-     * Show the specified resource.
-     *
-     * @param  int  $id
-     * @return Renderable
-     */
     public function show($id)
     {
-        return view('post::show');
+        $post = $this->post->findOrFail($id);
+
+        return '';
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Renderable
-     */
     public function edit($id)
     {
-        return view('post::edit');
+        $post = $this->post->findOrFail($id);
+
+        return Inertia::render('Admin/Post/Edit', compact('post'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  Request  $request
-     * @param  int  $id
-     * @return Renderable
-     */
-    public function update(Request $request, $id)
+    public function update(Requests\PostRequest $request, $id)
     {
-        //
+        $post = $this->post->findOrFail($id);
+
+        if ($request->image) {
+            if ($post->image && Storage::exists($post->image)) {
+                Storage::delete($post->image);
+            }
+        }
+
+        $this->post_service->updateOrCreate($request->all(), $post->id);
+
+        return redirect()
+            ->route('post.edit', $id)->with('message', 'Atualização realizado com sucesso!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Renderable
-     */
-    public function destroy($id)
+    public function confirmDelete($id)
     {
-        //
+        $post = $this->post->findOrFail($id);
+
+        return Inertia::render('Admin/Post/Delete', compact('post'));
+    }
+
+    public function delete($id)
+    {
+        $post = $this->post->findOrFail($id);
+
+        $this->post_service->delete($post);
+
+        return redirect()
+            ->route('post.index')->with('message', 'Exclusão realizado com sucesso!');
     }
 }

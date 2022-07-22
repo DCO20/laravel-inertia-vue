@@ -3,6 +3,10 @@
 namespace Modules\Post\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Modules\Post\Services\Actions\PostAction;
+use Modules\Post\Services\Actions\PostDeleteAction;
+use Modules\Post\Services\PostService;
+use Modules\Post\Services\PostServiceInterface;
 
 class PostServiceProvider extends ServiceProvider
 {
@@ -37,6 +41,13 @@ class PostServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
+
+        $this->app->bind(PostServiceInterface::class, function () {
+            return new PostService(
+                new PostAction,
+                new PostDeleteAction
+            );
+        });
     }
 
     /**
@@ -50,7 +61,8 @@ class PostServiceProvider extends ServiceProvider
             module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower.'.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            module_path($this->moduleName, 'Config/config.php'), $this->moduleNameLower
+            module_path($this->moduleName, 'Config/config.php'),
+            $this->moduleNameLower
         );
     }
 

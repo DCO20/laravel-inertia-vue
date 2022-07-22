@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use Modules\Post\Http\Controllers\PostController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,6 +14,35 @@
 |
 */
 
-Route::prefix('post')->group(function () {
-    Route::get('/', 'PostController@index');
-});
+Route::prefix('dashboard/postagem')
+    ->as('post.')
+    ->middleware(['auth'])
+    ->group(
+        function () {
+            Route::get('/', [PostController::class, 'index'])
+                ->name('index');
+
+            Route::get('{id}/ver', [PostController::class, 'show'])
+                ->name('show');
+
+            Route::get('/cadastrar', [PostController::class, 'create'])
+                ->name('create');
+
+            Route::post('/', [PostController::class, 'store'])
+                ->name('store');
+
+            Route::get('{id}/editar', [PostController::class, 'edit'])
+                ->name('edit');
+
+            Route::put('{id}/editar', [
+                PostController::class, 'update',
+            ])
+                ->name('update');
+
+            Route::get('{id}/confirmar-exclusao', [PostController::class, 'confirmDelete'])
+                ->name('confirm_delete');
+
+            Route::delete('{id}/excluir', [PostController::class, 'delete'])
+                ->name('delete');
+        }
+    );
