@@ -10,17 +10,16 @@ use Modules\Category\Services\CategoryServiceInterface;
 
 class CategoryController extends Controller
 {
-    protected $category;
-
-    protected $category_service;
-
+    /**
+     * Método Construtor
+     *
+     * @param Category $category
+     * @param CategoryServiceInterface $category_service
+     */
     public function __construct(
-        Category $category,
-        CategoryServiceInterface $category_service
+        protected Category $category,
+        protected CategoryServiceInterface $category_service
     ) {
-        $this->category = $category;
-
-        $this->category_service = $category_service;
     }
 
     /**
