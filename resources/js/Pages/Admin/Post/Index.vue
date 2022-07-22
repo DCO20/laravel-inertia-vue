@@ -3,7 +3,7 @@
 
     <BreezeAuthenticatedLayout>
         <template #header>
-            <div class="flex justify-between">
+            <div class="flex justify-between  ">
                 <nav
                     class="
                         relative
