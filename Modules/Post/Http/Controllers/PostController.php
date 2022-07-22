@@ -11,20 +11,23 @@ use Modules\Post\Services\PostServiceInterface;
 
 class PostController extends Controller
 {
-    protected $post;
-
-    protected $post_service;
-
+    /**
+     * Método Construtor
+     *
+     * @param  Post  $post
+     * @param  PostServiceInterface  $post_service
+     */
     public function __construct(
-        Post $post,
-
-        PostServiceInterface $post_service
+        protected  Post $post,
+        protected PostServiceInterface $post_service
     ) {
-        $this->post = $post;
-
-        $this->post_service = $post_service;
     }
 
+    /**
+     * Tela Inicial
+     *
+     * @return \Inertia\Inertia
+     */
     public function index()
     {
         return Inertia::render('Admin/Post/Index', [
@@ -33,11 +36,22 @@ class PostController extends Controller
         ]);
     }
 
+    /**
+     * Tela de criação
+     *
+     * @return \Inertia\Inertia
+     */
     public function create()
     {
         return Inertia::render('Admin/Post/Create');
     }
 
+    /**
+     * Cadastro
+     *
+     * @param  Requests\PostRequest  $request
+     * @return void
+     */
     public function store(Requests\PostRequest $request)
     {
         $this->post_service->updateOrCreate($request->all());
@@ -46,6 +60,12 @@ class PostController extends Controller
             ->route('post.index')->with('message', 'Cadastro realizado com sucesso!');
     }
 
+    /**
+     * Tela de exibição
+     *
+     * @param  int  $id
+     * @return void
+     */
     public function show($id)
     {
         $post = $this->post->findOrFail($id);
@@ -53,6 +73,12 @@ class PostController extends Controller
         return '';
     }
 
+    /**
+     * Tela de edição
+     *
+     * @param  int  $id
+     * @return \Inertia\Inertia
+     */
     public function edit($id)
     {
         $post = $this->post->findOrFail($id);
@@ -60,6 +86,13 @@ class PostController extends Controller
         return Inertia::render('Admin/Post/Edit', compact('post'));
     }
 
+    /**
+     * Atualização
+     *
+     * @param  Requests\PostRequest  $request
+     * @param  int  $id
+     * @return void
+     */
     public function update(Requests\PostRequest $request, $id)
     {
         $post = $this->post->findOrFail($id);
@@ -76,6 +109,12 @@ class PostController extends Controller
             ->route('post.edit', $id)->with('message', 'Atualização realizado com sucesso!');
     }
 
+    /**
+     * Tela de exclusão
+     *
+     * @param  int  $id
+     * @return \Inertia\Inertia
+     */
     public function confirmDelete($id)
     {
         $post = $this->post->findOrFail($id);
@@ -83,6 +122,12 @@ class PostController extends Controller
         return Inertia::render('Admin/Post/Delete', compact('post'));
     }
 
+    /**
+     * Exclusão
+     *
+     * @param  int  $id
+     * @return void
+     */
     public function delete($id)
     {
         $post = $this->post->findOrFail($id);
