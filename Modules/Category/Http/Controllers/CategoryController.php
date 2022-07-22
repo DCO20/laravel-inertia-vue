@@ -25,7 +25,7 @@ class CategoryController extends Controller
     /**
      * Tela inicial
      *
-     * @return void
+     * @return \Inertia\Inertia
      */
     public function index()
     {
@@ -37,7 +37,7 @@ class CategoryController extends Controller
     /**
      * Tela criação
      *
-     * @return void
+     * @return \Inertia\Inertia
      */
     public function create()
     {
@@ -62,7 +62,7 @@ class CategoryController extends Controller
      * tela de exibição
      *
      * @param  int  $id
-     * @return void
+     * @return \Inertia\Inertia
      */
     public function show($id)
     {
@@ -75,7 +75,7 @@ class CategoryController extends Controller
      * Tela de edição
      *
      * @param [type] $id
-     * @return void
+     * @return \Inertia\Inertia
      */
     public function edit($id)
     {
@@ -105,7 +105,7 @@ class CategoryController extends Controller
      * Tela de Exclusão
      *
      * @param  int  $id
-     * @return void
+     * @return \Inertia\Inertia
      */
     public function confirmDelete($id)
     {
