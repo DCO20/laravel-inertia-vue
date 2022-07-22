@@ -13,8 +13,8 @@ class CategoryController extends Controller
     /**
      * Método Construtor
      *
-     * @param Category $category
-     * @param CategoryServiceInterface $category_service
+     * @param  Category  $category
+     * @param  CategoryServiceInterface  $category_service
      */
     public function __construct(
         protected Category $category,
