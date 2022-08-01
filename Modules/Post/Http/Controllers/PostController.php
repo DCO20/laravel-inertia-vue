@@ -32,7 +32,6 @@ class PostController extends Controller
     {
         return Inertia::render('Admin/Post/Index', [
             'posts' => $this->post->paginate(9),
-            'image' => asset('storage/'.$this->post->image),
         ]);
     }
 

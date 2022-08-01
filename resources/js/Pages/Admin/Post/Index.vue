@@ -219,7 +219,6 @@
                                                                 h-10
                                                                 rounded-full
                                                             "
-                                                            :src="image"
                                                             :alt="post.title"
                                                         />
                                                     </td>
@@ -441,7 +440,6 @@ import { Head } from "@inertiajs/inertia-vue3";
 import { Link } from "@inertiajs/inertia-vue3";
 
 const props = defineProps({
-    posts: Object,
-    image: String
+    posts: Object
 });
 </script>

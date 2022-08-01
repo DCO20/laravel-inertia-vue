@@ -16,11 +16,15 @@ class PostRequest extends FormRequest
         $id = $this->segment(3);
         $rules = [
             'title' => ['required', "unique:posts,title,{$id},id"],
-            'image' => ['nullable|image|max:1024'],
+            'image' => ['required', 'image', 'max:1024'],
             'published' => ['required'],
             'abstract' => ['required'],
             'description' => ['required'],
         ];
+
+        if ($this->method() == 'PUT') {
+            $rules['image'] = 'nullable|image';
+        }
 
         return $rules;
     }
